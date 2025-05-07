@@ -4,16 +4,29 @@ const themeBtnIcons = {
 };
 const themeBtnIcon = document.getElementById('theme-switch-icon');
 
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-switch-btn');
+    const filterButtons = document.querySelectorAll(".filter-btn");
 
-    // Initalize Theme Icon
+    // Initialize Theme Icon
     themeBtnIcon.src = document.body.classList.contains('dark') ? themeBtnIcons.dark : themeBtnIcons.light;
-
     themeBtn.addEventListener('click' , lightDarkTheme);
+
+    // Filter Button
+    filterButtons.forEach((filterButton, idx) => {
+
+        filterButton.addEventListener('click', () => {
+            if(filterButton.classList.contains("active")) {
+
+                return
+            }
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+
+            filterButton.classList.add("active");
+        });
+    });
+
+
 });
 
 
@@ -35,3 +48,4 @@ function lightDarkTheme() {
 
     }
 }
+

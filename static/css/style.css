@@ -106,8 +106,42 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 12px;
     list-style-type: none;
+}
+
+/* Extension filter button style */
+.filter-btn {
+    padding: 8px 14px 8px 14px;
+    background-color: var(--neutral-700);
+    border-radius: 24px;
+    border: 2px solid var(--neutral-600);
+    text-decoration: none;
+    color: var(--neutral-0);
+}
+
+
+/* Active State for list */
+.filter-btn.active {
+    background-color: var(--red-400);
+    border-color: var(--red-400);
+}
+
+
+
+/* Responsive */
+
+@media screen and (max-width: 767px) {
+    .main-header {
+        width: 90%;
+    }
+
+    .extension-container-header {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+
 }
 
 
