@@ -126,6 +126,17 @@ body {
     background-color: var(--red-400);
     border-color: var(--red-400);
 }
+.extensions-list {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    gap: 32px;
+}
+.extension {
+    background-color: white;
+    width: 300px;
+    height: 200px;
+}
 
 
 
