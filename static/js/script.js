@@ -3,15 +3,12 @@ const themeBtnIcons = {
     'dark' : '/assets/images/icon-sun.svg'
 };
 const themeBtnIcon = document.getElementById('theme-switch-icon');
-
+const themeBtn = document.getElementById('theme-switch-btn');
+const filterButtons = document.querySelectorAll(".filter-btn");
+const extensionBody = document.querySelector(".extensions-list");
 let extensionsAll = [];
-let isActiveDarkMode;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.getElementById('theme-switch-btn');
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    const extensionBody = document.querySelector(".extensions-list");
-
     // Initialize Data Fetch
     initExtensions();
 
@@ -19,13 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     themeBtnIcon.src = document.body.classList.contains('dark') ? themeBtnIcons.dark : themeBtnIcons.light;
     themeBtn.addEventListener('click' , lightDarkTheme);
 
-    // Filter Button
-
     // Initialize Filter Button
     filterButtons.forEach((filterButton,idx) => {
 
         filterButton.addEventListener('click', () => {
-            let filteredData;
+            let filteredData = extensionsAll;
 
             if(filterButton.classList.contains("active")) {
                 return;
@@ -34,24 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
             filterButton.classList.add("active");
 
             // Clear Extensions Body
-
             switch (idx) {
                 case 0:
                     extensionBody.innerHTML = "";
 
-                    filteredData = extensionsAll;
                     filteredData.forEach((d) => {
                         extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
                     });
-
-
-
                     break;
                 case 1:
                     extensionBody.innerHTML = "";
 
                     filteredData = extensionsAll.filter(val => val.isActive);
-                    filteredData.forEach(v => {
+                    filteredData.forEach(d => {
                         extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
                     })
                     break;
@@ -59,25 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     extensionBody.innerHTML = "";
 
                     filteredData = extensionsAll.filter(val => !val.isActive);
-                    filteredData.forEach(v => {
+                    filteredData.forEach(d => {
                         extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
-
-                    })
+                    });
                     break;
             }
         });
     });
 
 });
-
-
 async function initExtensions() {
     extensionsAll = await getExtensionsData();
+    await setActiveFilterButton(0);
+
 }
-
-
-
-
  async function getExtensionsData() {
     try {
         const res = await fetch("data.json");
@@ -94,7 +79,24 @@ async function initExtensions() {
     }
 
 }
+function setActiveFilterButton(btnIndex) {
+    let allData = extensionsAll;
+    try {
+        filterButtons.forEach((val,idx) => {
+            if (btnIndex === idx) {
+                val.classList.toggle("active", true);
+                // Clear Body
+                extensionBody.innerHTML = "";
+                allData.forEach(data => {
+                    extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
+                });
 
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 
 
@@ -106,15 +108,10 @@ function lightDarkTheme() {
 
         bodyContainer.classList.add("light");
         themeBtnIcon.src = themeBtnIcons.light;
-        
-        isActiveDarkMode = false;
     } else {
         bodyContainer.classList.remove("light");
         bodyContainer.classList.add("dark");
         themeBtnIcon.src = themeBtnIcons.dark;
-
-        isActiveDarkMode = true;
-
     }
 }
 
