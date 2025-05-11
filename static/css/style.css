@@ -28,11 +28,13 @@
 }
 
 body {
-    height: 150vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    background-attachment: fixed;
     font-family: var(--noto-sans-font);
     gap: 32px;
 }
@@ -131,6 +133,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 2fr);
     gap: 12px;
+    padding: 12px;
 }
 .extension {
     background-color: white;
@@ -159,9 +162,9 @@ body {
         padding: 14px;
 
     }
-
-
 }
+
+
 
 
 

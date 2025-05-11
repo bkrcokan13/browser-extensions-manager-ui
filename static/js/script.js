@@ -90,15 +90,12 @@ function setActiveFilterButton(btnIndex) {
                 allData.forEach(data => {
                     extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
                 });
-
             }
         });
     } catch (error) {
         console.error(error);
     }
 }
-
-
 
 function lightDarkTheme() {
     const bodyContainer = document.body;
