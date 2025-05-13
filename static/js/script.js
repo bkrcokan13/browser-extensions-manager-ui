@@ -1,13 +1,17 @@
-const themeBtnIcons = {
-    'light' : '/assets/images/icon-moon.svg',
-    'dark' : '/assets/images/icon-sun.svg'
-};
+// Defines
 const themeBtnIcon = document.getElementById('theme-switch-icon');
 const themeBtn = document.getElementById('theme-switch-btn');
 const filterButtons = document.querySelectorAll(".filter-btn");
 const extensionBody = document.querySelector(".extensions-list");
+
+// Extensions Lists
 let extensionsAll = [];
 
+// Theme Button Icons
+const themeBtnIcons = {
+    'light' : '/assets/images/icon-moon.svg',
+    'dark' : '/assets/images/icon-sun.svg'
+};
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Data Fetch
     initExtensions();
@@ -19,9 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Filter Button
     filterButtons.forEach((filterButton,idx) => {
 
+        // Filter Button Click Event
         filterButton.addEventListener('click', () => {
             let filteredData = extensionsAll;
 
+
+            // Check Active Status
             if(filterButton.classList.contains("active")) {
                 return;
             }
@@ -40,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 1:
                     extensionBody.innerHTML = "";
 
+                    // Only Active
                     filteredData = extensionsAll.filter(val => val.isActive);
                     filteredData.forEach(d => {
                         extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
@@ -48,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 2:
                     extensionBody.innerHTML = "";
 
+                    // Only InActive
                     filteredData = extensionsAll.filter(val => !val.isActive);
                     filteredData.forEach(d => {
                         extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
@@ -58,11 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// Load Extensions
 async function initExtensions() {
     extensionsAll = await getExtensionsData();
     await setActiveFilterButton(0);
-
 }
+// Fetch Extensions Data
  async function getExtensionsData() {
     try {
         const res = await fetch("data.json");
@@ -79,6 +90,8 @@ async function initExtensions() {
     }
 
 }
+
+// Set Active Any Filter Button --> Default Index : 0
 function setActiveFilterButton(btnIndex) {
     let allData = extensionsAll;
     try {
@@ -88,7 +101,7 @@ function setActiveFilterButton(btnIndex) {
                 // Clear Body
                 extensionBody.innerHTML = "";
                 allData.forEach(data => {
-                    extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
+                        extensionBody.innerHTML += "<div class=\"extension\"></div>\n"
                 });
             }
         });
@@ -97,6 +110,8 @@ function setActiveFilterButton(btnIndex) {
     }
 }
 
+
+// Switch Dark or Light Theme Button
 function lightDarkTheme() {
     const bodyContainer = document.body;
 
@@ -104,6 +119,8 @@ function lightDarkTheme() {
         bodyContainer.classList.remove("dark");
 
         bodyContainer.classList.add("light");
+
+        // Switch Button Icon
         themeBtnIcon.src = themeBtnIcons.light;
     } else {
         bodyContainer.classList.remove("light");
